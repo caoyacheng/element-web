@@ -37,7 +37,7 @@ import SlidingSyncController from "./controllers/SlidingSyncController";
 import { FontWatcher } from "./watchers/FontWatcher";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
-import { type CustomTheme } from "../theme";
+import { type CustomTheme, DEFAULT_THEME } from "../theme";
 import AnalyticsController from "./controllers/AnalyticsController";
 import FallbackIceServerController from "./controllers/FallbackIceServerController";
 import { type IRightPanelForRoomStored } from "../stores/right-panel/RightPanelStoreIPanelState.ts";
@@ -957,7 +957,7 @@ export const SETTINGS: Settings = {
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: "light",
+        default: DEFAULT_THEME,
         controller: new ThemeController(),
     },
     "custom_themes": {

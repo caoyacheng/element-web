@@ -90,6 +90,7 @@ export interface IConfigOptions {
     mobile_guide_app_variant?: "element" | "element-classic" | "element-pro";
 
     default_theme?: "light" | "dark" | string; // custom themes are strings
+    default_language?: string; // e.g. zh_Hans
     default_country_code?: string; // ISO 3166 alpha2 country code
     default_federate?: boolean;
     default_device_display_name?: string; // for device naming on login+registration

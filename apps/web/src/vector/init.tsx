@@ -68,6 +68,10 @@ export async function loadLanguage(): Promise<void> {
     let langs: string[] = [];
 
     if (!prefLang) {
+        const configDefaultLang = SdkConfig.get().default_language;
+        if (configDefaultLang) {
+            langs.push(...languageHandler.getNormalizedLanguageKeys(configDefaultLang));
+        }
         languageHandler.getLanguagesFromBrowser().forEach((l) => {
             langs.push(...languageHandler.getNormalizedLanguageKeys(l));
         });

@@ -28,7 +28,7 @@ import SettingsStore from "./settings/SettingsStore";
 import ThemeWatcher from "./settings/watchers/ThemeWatcher";
 import { FontWatcher } from "./settings/watchers/FontWatcher";
 
-export const DEFAULT_THEME = "light";
+export const DEFAULT_THEME = "tiang";
 const HIGH_CONTRAST_THEMES: Record<string, string> = {
     light: "light-high-contrast",
 };
@@ -80,6 +80,14 @@ export function findNonHighContrastTheme(hcTheme: string): string | undefined {
 }
 
 /**
+ * Stylesheets that use the light Compound colour scale (cpd-theme-light on body).
+ * Includes non-"light" named themes that are still light UI.
+ */
+function isLightCompoundStylesheet(stylesheetName: string): boolean {
+    return stylesheetName.includes("light") || stylesheetName === "tiang";
+}
+
+/**
  * Decide whether the supplied theme is high contrast.
  */
 export function isHighContrastTheme(theme: string): boolean {
@@ -91,6 +99,7 @@ export function enumerateThemes(): { [key: string]: string } {
         "light": _t("common|light"),
         "light-high-contrast": _t("theme|light_high_contrast"),
         "dark": _t("common|dark"),
+        "tiang": _t("theme|tiang"),
     };
     const customThemes = SettingsStore.getValue("custom_themes") || [];
     const customThemeNames: Record<string, string> = {};
@@ -363,7 +372,7 @@ export async function setTheme(theme?: string): Promise<void> {
      */
     document.body.classList.remove("cpd-theme-light", "cpd-theme-dark", "cpd-theme-light-hc", "cpd-theme-dark-hc");
 
-    let compoundThemeClassName = `cpd-theme-` + (stylesheetName.includes("light") ? "light" : "dark");
+    let compoundThemeClassName = `cpd-theme-` + (isLightCompoundStylesheet(stylesheetName) ? "light" : "dark");
     // Always respect user OS preference!
     if (isHighContrastTheme(theme) || window.matchMedia("(prefers-contrast: more)").matches) {
         compoundThemeClassName += "-hc";

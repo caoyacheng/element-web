@@ -21,13 +21,14 @@ import PlatformPeg from "../../../PlatformPeg";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { type IMatrixClientCreds } from "../../../MatrixClientPeg";
+import SdkConfig from "../../../SdkConfig";
 import PasswordLogin from "../../views/auth/PasswordLogin";
 import InlineSpinner from "../../views/elements/InlineSpinner";
 import Spinner from "../../views/elements/Spinner";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
 import AuthBody from "../../views/auth/AuthBody";
-import AuthHeader from "../../views/auth/AuthHeader";
+import LanguageSelector from "../../views/auth/LanguageSelector";
 import AccessibleButton, { type ButtonEvent } from "../../views/elements/AccessibleButton";
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
@@ -528,25 +529,35 @@ class LoginComponent extends React.PureComponent<IProps, IState> {
             );
         }
 
+        const brand = SdkConfig.get("brand") ?? "Element";
+
         return (
             <AuthPage>
-                <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
-                <AuthBody>
-                    <h1>
-                        {_t("action|sign_in")}
-                        {loader}
-                    </h1>
-                    {errorTextSection}
-                    {serverDeadSection}
-                    <ServerPicker
-                        serverConfig={this.props.serverConfig}
-                        onServerConfigChange={this.props.onServerConfigChange}
-                        disabled={this.isBusy()}
-                    />
-                    {this.renderLoginComponentForFlows()}
-                    {this.props.children}
-                    {footer}
-                </AuthBody>
+                <div className="mx_LoginPage">
+                    <div className="mx_LoginPage_intro">
+                        <h1>{brand}</h1>
+                        <p>{_t("auth|sign_in_description")}</p>
+                        <div className="mx_LoginPage_introLanguage">
+                            <LanguageSelector disabled={this.props.isSyncing || this.state.busyLoggingIn} />
+                        </div>
+                    </div>
+                    <AuthBody className="mx_LoginPage_authBody">
+                        <h1>
+                            {_t("action|sign_in")}
+                            {loader}
+                        </h1>
+                        {errorTextSection}
+                        {serverDeadSection}
+                        <ServerPicker
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.props.onServerConfigChange}
+                            disabled={this.isBusy()}
+                        />
+                        {this.renderLoginComponentForFlows()}
+                        {this.props.children}
+                        {footer}
+                    </AuthBody>
+                </div>
             </AuthPage>
         );
     }

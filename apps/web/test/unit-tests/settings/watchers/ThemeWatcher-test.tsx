@@ -57,13 +57,13 @@ function makeGetValueAt(values: any) {
 }
 
 describe("ThemeWatcher", function () {
-    it("should choose a light theme by default", () => {
+    it("should choose the default theme when system theme is inconclusive", () => {
         // Given no system settings
         global.matchMedia = makeMatchMedia({});
 
-        // Then getEffectiveTheme returns light
+        // Then getEffectiveTheme returns the app default (see DEFAULT_THEME in theme.ts)
         const themeWatcher = new ThemeWatcher();
-        expect(themeWatcher.getEffectiveTheme()).toBe("light");
+        expect(themeWatcher.getEffectiveTheme()).toBe("tiang");
     });
 
     it("should choose default theme if system settings are inconclusive", () => {

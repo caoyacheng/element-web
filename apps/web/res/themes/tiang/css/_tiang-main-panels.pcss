@@ -1,0 +1,86 @@
+/*
+ * Tiang: middle (room list) + right (timeline) panels — rounded “card” corners and soft elevation.
+ * Same vertical gradient as SpacePanel (_tiang-space-panel.pcss: #e8f4fc → #d4e8f8).
+ */
+
+:root {
+    --tiang-surface-gradient: linear-gradient(180deg, #e8f4fc 0%, #d4e8f8 100%);
+    /* Card interiors: true white (Compound canvas token is tinted blue in _tiang-compound-overrides.pcss). */
+    --tiang-card-background: #ffffff;
+}
+
+/*
+ * Full-width canvas behind SpacePanel + cards. Child layer must stay transparent so this shows through
+ * (see .mx_MatrixChat > :not(...) { background-color: $background } in _MatrixChat.pcss).
+ */
+.mx_MatrixChat:has(#left-panel) {
+    background: var(--tiang-surface-gradient);
+}
+
+/* GroupView root — override global $background on direct child of .mx_MatrixChat */
+.mx_MatrixChat:has(#left-panel) > * {
+    background: transparent !important;
+}
+
+/*
+ * Middle + right “cards”: solid white, on top of the gradient gutter.
+ */
+#left-panel.mx_LeftPanel_panel {
+    position: relative;
+    z-index: 1;
+    margin: 12px 10px 12px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--tiang-card-background);
+    box-shadow:
+        0 1px 0 rgb(255 255 255 / 75%) inset,
+        0 1px 2px rgb(15 23 42 / 6%),
+        0 10px 28px rgb(15 23 42 / 8%);
+}
+
+/* New room list forces its own canvas — keep same white as the card shell */
+#left-panel .mx_LeftPanel_newRoomList {
+    background: var(--tiang-card-background) !important;
+}
+
+#left-panel .mx_LeftPanel,
+#left-panel .mx_LeftPanel_roomListContainer,
+#left-panel .mx_LeftPanel_outerWrapper {
+    background-color: transparent;
+}
+
+/*
+ * Right column: main room / home / user content (second Panel with mx_LeftPanel_panel, no id).
+ */
+.mx_LeftPanel_panel:not(#left-panel) {
+    position: relative;
+    z-index: 1;
+    margin: 12px 12px 12px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--tiang-card-background);
+    box-shadow:
+        0 1px 0 rgb(255 255 255 / 75%) inset,
+        0 1px 2px rgb(15 23 42 / 6%),
+        0 10px 28px rgb(15 23 42 / 8%);
+}
+
+.mx_LeftPanel_panel:not(#left-panel) .mx_RoomView_wrapper,
+.mx_LeftPanel_panel:not(#left-panel) .mx_RoomView,
+.mx_LeftPanel_panel:not(#left-panel) .mx_RoomView_body,
+.mx_LeftPanel_panel:not(#left-panel) .mx_MainSplit {
+    background: transparent;
+}
+
+.mx_LeftPanel_panel:not(#left-panel) .mx_RoomHeader {
+    background: transparent;
+    border-bottom-color: rgb(15 23 42 / 10%);
+}
+
+.mx_LeftPanel_panel:not(#left-panel) .mx_RoomHeader:hover {
+    background: var(--cpd-color-bg-subtle-primary);
+}
+
+.mx_LeftPanel_panel:not(#left-panel) .mx_RoomView_statusArea {
+    background-color: transparent;
+}

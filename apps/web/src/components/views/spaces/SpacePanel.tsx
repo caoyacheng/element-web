@@ -62,6 +62,7 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 import UIStore from "../../../stores/UIStore";
 import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { useTheme } from "../../../hooks/useTheme";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
 import { useDispatcher } from "../../../hooks/useDispatcher";
@@ -293,11 +294,13 @@ interface IInnerSpacePanelProps extends DroppableProvidedProps {
     setPanelCollapsed: Dispatch<SetStateAction<boolean>>;
     isDraggingOver: boolean;
     innerRef: RefCallback<HTMLElement>;
+    /** Tiang: hide "Other rooms", create space, etc. */
+    isTiangTheme: boolean;
 }
 
 // Optimisation based on https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md#recommended-droppable--performance-optimisation
 const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
-    ({ children, isPanelCollapsed, setPanelCollapsed, isDraggingOver, innerRef, ...props }) => {
+    ({ children, isPanelCollapsed, setPanelCollapsed, isDraggingOver, innerRef, isTiangTheme, ...props }) => {
         const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
         const activeSpaces = activeSpace ? [activeSpace] : [];
 
@@ -305,6 +308,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 
         const metaSpacesSection = metaSpaces
             .filter((key) => !(key === MetaSpace.VideoRooms && !SettingsStore.getValue("feature_video_rooms")))
+            .filter((key) => !(isTiangTheme && key === MetaSpace.Orphans))
             .map((key) => {
                 const Component = metaSpaceComponentMap[key];
                 return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
@@ -375,7 +379,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                         />
                     </li>
                 ))}
-                {shouldShowComponent(UIComponent.CreateSpaces) && (
+                {!isTiangTheme && shouldShowComponent(UIComponent.CreateSpaces) && (
                     <CreateSpaceButton isPanelCollapsed={isPanelCollapsed} setPanelCollapsed={setPanelCollapsed} />
                 )}
             </IndicatorScrollbar>
@@ -386,6 +390,17 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 const SpacePanel: React.FC = () => {
     const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
+    const { theme } = useTheme();
+    const isTiangTheme = theme === "tiang";
+    /** Tiang: fixed expanded strip, no collapse toggle or keyboard toggle. */
+    const effectiveCollapsed = isTiangTheme ? false : isPanelCollapsed;
+    const setPanelCollapsedStable = useCallback(
+        (value: SetStateAction<boolean>) => {
+            if (isTiangTheme) return;
+            setPanelCollapsed(value);
+        },
+        [isTiangTheme],
+    );
     const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
         if (ref.current) UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
@@ -394,11 +409,19 @@ const SpacePanel: React.FC = () => {
 
     useDispatcher(defaultDispatcher, (payload: ActionPayload) => {
         if (payload.action === Action.ToggleSpacePanel) {
-            setPanelCollapsed(!isPanelCollapsed);
+            if (isTiangTheme) return;
+            setPanelCollapsed((c) => !c);
         }
     });
 
     const newRoomListEnabled = useSettingValue("feature_new_room_list");
+
+    useEffect(() => {
+        if (!isTiangTheme) return;
+        if (SpaceStore.instance.activeSpace === MetaSpace.Orphans) {
+            SpaceStore.instance.setActiveSpace(MetaSpace.Home, false);
+        }
+    }, [isTiangTheme]);
 
     return (
         <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
@@ -416,7 +439,7 @@ const SpacePanel: React.FC = () => {
                 >
                     <nav
                         className={classNames("mx_SpacePanel", {
-                            collapsed: isPanelCollapsed,
+                            collapsed: effectiveCollapsed,
                             newUi: newRoomListEnabled,
                         })}
                         onKeyDown={(ev) => {
@@ -438,40 +461,43 @@ const SpacePanel: React.FC = () => {
                         ref={ref}
                         aria-label={_t("common|spaces")}
                     >
-                        <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                            <AccessibleButton
-                                className={classNames("mx_SpacePanel_toggleCollapse", {
-                                    expanded: !isPanelCollapsed,
-                                })}
-                                onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                                title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                caption={
-                                    <KeyboardShortcut
-                                        value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
-                                        className="mx_SpacePanel_Tooltip_KeyboardShortcut"
-                                    />
-                                }
-                            >
-                                <ChevronRightIcon />
-                            </AccessibleButton>
+                        <UserMenu isPanelCollapsed={effectiveCollapsed}>
+                            {!isTiangTheme && (
+                                <AccessibleButton
+                                    className={classNames("mx_SpacePanel_toggleCollapse", {
+                                        expanded: !effectiveCollapsed,
+                                    })}
+                                    onClick={() => setPanelCollapsedStable(!effectiveCollapsed)}
+                                    title={effectiveCollapsed ? _t("action|expand") : _t("action|collapse")}
+                                    caption={
+                                        <KeyboardShortcut
+                                            value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
+                                            className="mx_SpacePanel_Tooltip_KeyboardShortcut"
+                                        />
+                                    }
+                                >
+                                    <ChevronRightIcon />
+                                </AccessibleButton>
+                            )}
                         </UserMenu>
                         <Droppable droppableId="top-level-spaces">
                             {(provided, snapshot) => (
                                 <InnerSpacePanel
                                     {...provided.droppableProps}
-                                    isPanelCollapsed={isPanelCollapsed}
-                                    setPanelCollapsed={setPanelCollapsed}
+                                    isPanelCollapsed={effectiveCollapsed}
+                                    setPanelCollapsed={setPanelCollapsedStable}
                                     isDraggingOver={snapshot.isDraggingOver}
                                     innerRef={provided.innerRef}
+                                    isTiangTheme={isTiangTheme}
                                 >
                                     {provided.placeholder}
                                 </InnerSpacePanel>
                             )}
                         </Droppable>
 
-                        <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
+                        {!isTiangTheme && <ThreadsActivityCentre displayButtonLabel={!effectiveCollapsed} />}
 
-                        <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+                        <QuickSettingsButton isPanelCollapsed={effectiveCollapsed} />
                     </nav>
                 </DragDropContext>
             )}

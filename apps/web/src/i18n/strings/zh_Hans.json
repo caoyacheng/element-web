@@ -285,7 +285,7 @@
             "verification_pending_title": "验证等待中"
         },
         "set_email_prompt": "你想要设置一个邮箱地址吗？",
-        "sign_in_description": "使用你的账户继续。",
+        "sign_in_description": "为企业而生的沟通中枢",
         "sign_in_instead": "跳转到登录",
         "sign_in_instead_prompt": "已有账户？<a>在此登录</a>",
         "sign_in_or_register": "登录或创建账户",
@@ -1404,6 +1404,7 @@
         "moderator": "协管员",
         "restricted": "受限"
     },
+    "powered_by_artifex": "由 Artifex 驱动",
     "powered_by_matrix": "由 Matrix 驱动",
     "powered_by_matrix_with_logo": "去中心化、加密的聊天与协作，由 $matrixLogo 驱动",
     "presence": {

@@ -140,7 +140,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
                 name="themeSelector"
                 title=""
                 type="radio"
-                value="light-high-contrast"
+                value="tiang"
               />
               <div
                 class="_ui_1ug7n_19"
@@ -153,6 +153,39 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             <label
               class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
               for="radix-_r_2b_"
+            >
+              Tiang
+            </label>
+          </div>
+        </div>
+        <div
+          class="_inline-field_19upo_32 mx_ThemeChoicePanel_themeSelector cpd-theme-light"
+        >
+          <div
+            class="_inline-field-control_19upo_44"
+          >
+            <div
+              class="_container_1ug7n_10"
+            >
+              <input
+                class="_input_1ug7n_18"
+                id="radix-_r_2c_"
+                name="themeSelector"
+                title=""
+                type="radio"
+                value="light-high-contrast"
+              />
+              <div
+                class="_ui_1ug7n_19"
+              />
+            </div>
+          </div>
+          <div
+            class="_inline-field-body_19upo_38"
+          >
+            <label
+              class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
+              for="radix-_r_2c_"
             >
               High contrast
             </label>
@@ -169,7 +202,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             >
               <input
                 class="_input_1ug7n_18"
-                id="radix-_r_2c_"
+                id="radix-_r_2d_"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -185,7 +218,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-_r_2c_"
+              for="radix-_r_2d_"
             >
               Alice theme
             </label>
@@ -203,7 +236,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_19upo_59"
-              for="radix-_r_2d_"
+              for="radix-_r_2e_"
             >
               Add custom theme
             </label>
@@ -211,9 +244,9 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
               class="_controls_17lij_8"
             >
               <input
-                aria-describedby="radix-_r_2e_"
+                aria-describedby="radix-_r_2f_"
                 class="_control_sqdq4_10"
-                id="radix-_r_2d_"
+                id="radix-_r_2e_"
                 name="input"
                 title=""
                 value=""
@@ -221,7 +254,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             </div>
             <span
               class="_message_19upo_85 _help-message_19upo_91"
-              id="radix-_r_2e_"
+              id="radix-_r_2f_"
             >
               Enter the URL of a custom theme you want to apply.
             </span>
@@ -419,7 +452,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
                 name="themeSelector"
                 title=""
                 type="radio"
-                value="light-high-contrast"
+                value="tiang"
               />
               <div
                 class="_ui_1ug7n_19"
@@ -432,6 +465,39 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             <label
               class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
               for="radix-_r_13_"
+            >
+              Tiang
+            </label>
+          </div>
+        </div>
+        <div
+          class="_inline-field_19upo_32 mx_ThemeChoicePanel_themeSelector cpd-theme-light"
+        >
+          <div
+            class="_inline-field-control_19upo_44"
+          >
+            <div
+              class="_container_1ug7n_10"
+            >
+              <input
+                class="_input_1ug7n_18"
+                id="radix-_r_14_"
+                name="themeSelector"
+                title=""
+                type="radio"
+                value="light-high-contrast"
+              />
+              <div
+                class="_ui_1ug7n_19"
+              />
+            </div>
+          </div>
+          <div
+            class="_inline-field-body_19upo_38"
+          >
+            <label
+              class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
+              for="radix-_r_14_"
             >
               High contrast
             </label>
@@ -448,7 +514,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             >
               <input
                 class="_input_1ug7n_18"
-                id="radix-_r_14_"
+                id="radix-_r_15_"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -464,7 +530,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-_r_14_"
+              for="radix-_r_15_"
             >
               Alice theme
             </label>
@@ -482,7 +548,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_19upo_59"
-              for="radix-_r_15_"
+              for="radix-_r_16_"
             >
               Add custom theme
             </label>
@@ -490,9 +556,9 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
               class="_controls_17lij_8"
             >
               <input
-                aria-describedby="radix-_r_16_"
+                aria-describedby="radix-_r_17_"
                 class="_control_sqdq4_10"
-                id="radix-_r_15_"
+                id="radix-_r_16_"
                 name="input"
                 title=""
                 value=""
@@ -500,7 +566,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             </div>
             <span
               class="_message_19upo_85 _help-message_19upo_91"
-              id="radix-_r_16_"
+              id="radix-_r_17_"
             >
               Enter the URL of a custom theme you want to apply.
             </span>
@@ -698,7 +764,7 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
                 name="themeSelector"
                 title=""
                 type="radio"
-                value="light-high-contrast"
+                value="tiang"
               />
               <div
                 class="_ui_1ug7n_19"
@@ -711,6 +777,39 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
             <label
               class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
               for="radix-_r_3_"
+            >
+              Tiang
+            </label>
+          </div>
+        </div>
+        <div
+          class="_inline-field_19upo_32 mx_ThemeChoicePanel_themeSelector cpd-theme-light"
+        >
+          <div
+            class="_inline-field-control_19upo_44"
+          >
+            <div
+              class="_container_1ug7n_10"
+            >
+              <input
+                class="_input_1ug7n_18"
+                id="radix-_r_4_"
+                name="themeSelector"
+                title=""
+                type="radio"
+                value="light-high-contrast"
+              />
+              <div
+                class="_ui_1ug7n_19"
+              />
+            </div>
+          </div>
+          <div
+            class="_inline-field-body_19upo_38"
+          >
+            <label
+              class="_label_19upo_59 mx_ThemeChoicePanel_themeSelector_Label"
+              for="radix-_r_4_"
             >
               High contrast
             </label>
